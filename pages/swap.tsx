@@ -112,6 +112,7 @@ export default function Home() {
                 theme={darkTheme}
                 provider={signer.data?.provider}
                 jsonRpcUrlMap={jsonRpcUrlMap}
+                hideConnectionUI={true}
               />
             )}
           </div>
