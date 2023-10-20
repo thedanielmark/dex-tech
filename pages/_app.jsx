@@ -1,4 +1,4 @@
-import type { AppProps } from "next/app";
+// import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import {
   darkTheme,
@@ -7,9 +7,11 @@ import {
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, mainnet, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
+import ClientProvider from "@/contexts/ClientContext";
 import "@rainbow-me/rainbowkit/styles.css";
 import "@/styles/globals.css";
 import "@/styles/index.scss";
+import WalletContext from "@/contexts/WalletContext";
 
 // const AltheaEVM = {
 //   id: 417834,
@@ -54,7 +56,7 @@ const MumbaiEVM = {
   testnet: true,
 };
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }) {
   const [ready, setReady] = useState(false);
 
   const { publicClient, chains } = configureChains(
@@ -81,20 +83,24 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       {ready ? (
-        <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider
-            chains={chains}
-            theme={darkTheme({
-              accentColor: "#2563eb",
-              accentColorForeground: "white",
-              borderRadius: "large",
-              fontStack: "system",
-              overlayBlur: "small",
-            })}
-          >
-            <Component {...pageProps} />
-          </RainbowKitProvider>
-        </WagmiConfig>
+        <ClientProvider>
+          <WagmiConfig config={wagmiConfig}>
+            <RainbowKitProvider
+              chains={chains}
+              theme={darkTheme({
+                accentColor: "#2563eb",
+                accentColorForeground: "white",
+                borderRadius: "large",
+                fontStack: "system",
+                overlayBlur: "small",
+              })}
+            >
+              <WalletContext>
+                <Component {...pageProps} />
+              </WalletContext>
+            </RainbowKitProvider>
+          </WagmiConfig>
+        </ClientProvider>
       ) : null}
     </>
   );

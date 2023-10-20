@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import {
@@ -15,29 +15,19 @@ import {
   useContractRead,
   useContractWrite,
   useDisconnect,
+  useNetwork,
 } from "wagmi";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { ethers } from "ethers";
-import { PushAPI } from "@pushprotocol/restapi";
-import { Chat } from "@pushprotocol/uiweb";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-// interface Props {
-//   children?: ReactNode;
-//   customHeader?: string;
-//   customHeaderDescription?: string;
-// }
+import { useEthersSigner } from "@/utilities/ethers";
 
 export default function ApplicationLayout({ children }) {
   const router = useRouter();
-  const [show, setShow] = useState(false);
   const [openRegisterTraderModal, setOpenRegisterTraderModal] = useState(false);
   const { address } = useAccount();
+  const { chain } = useNetwork();
   // const { disconnect } = useDisconnect({
   //   onSuccess() {
   //     router.push("/");
@@ -46,8 +36,9 @@ export default function ApplicationLayout({ children }) {
   const [inputs, setInputs] = useState({
     contractName: "",
     contractSymbol: "",
-    groupChatName: "",
   });
+
+  const signer = useEthersSigner({ chainId: chain?.id });
 
   const handleInput = (event) => {
     event.persist();
@@ -94,82 +85,43 @@ export default function ApplicationLayout({ children }) {
 
   const handleTraderTokenCreation = async (event) => {
     event.preventDefault();
-    createTraderToken({
-      args: [inputs.contractName, inputs.contractSymbol, "foobar"],
-    });
+    // createTraderToken({
+    //   args: [inputs.contractName, inputs.contractSymbol],
+    // });
 
     // Read contract we just created
-    const traderContractData = await refetchGetTraderContractData();
-    console.log(traderContractData.data);
+    // const traderContractData = await refetchGetTraderContractData();
+    // console.log(traderContractData.data);
 
-    const chatID = await createGroup(
-      inputs.groupChatName,
-      traderContractData.data
+    const xmtp = await Client.create(signer, { env: "dev" });
+
+    const isOnDevNetwork = await xmtp.canMessage(
+      "0x64574dDbe98813b23364704e0B00E2e71fC5aD17"
     );
+
+    if (!isOnDevNetwork) {
+      const conversation = await xmtp.conversations.newConversation(
+        "0x64574dDbe98813b23364704e0B00E2e71fC5aD17"
+      );
+      const message = await conversation.send("gm");
+
+      console.log(message);
+    } else {
+      const conversation = await xmtp.conversations.newConversation(
+        "0x64574dDbe98813b23364704e0B00E2e71fC5aD17"
+      );
+      const message = await conversation.send("gm");
+      console.log(message);
+      if (message.content === "gm") {
+        setOpenRegisterTraderModal(false);
+      }
+    }
 
     // Set ChatID for trader
-    setChatIDForTrader({
-      args: [traderContractData.data, chatID],
-    });
+    // setChatIDForTrader({
+    //   args: [traderContractData.data, chatID],
+    // });
   };
-
-  const createGroup = async (groupName, contractAddress) => {
-    // Creating a random signer from a wallet, ideally this is the wallet you will connect
-    const signer = ethers.Wallet.createRandom();
-
-    console.log(
-      `Signer address: ${signer.address} | Signer private key: ${signer.privateKey}`
-    );
-
-    // Initialize wallet user, pass 'prod' instead of 'staging' for mainnet apps
-    const user = await PushAPI.initialize(signer, {
-      env: "staging",
-    });
-
-    // Creating your token gated community
-    const createTokenGatedGroup = await user.chat.group.create(groupName, {
-      description: `A Token Gated ${groupName}`, // provide short description of group
-      image: "data:image/png;base64,iVBORw0K...", // provide base64 encoded image
-      members: [], // not needed, rules define this, can omit
-      admins: [], // not needed as per problem statement, can omit
-      private: true,
-      rules: {
-        entry: {
-          // entry is based on conditions
-          conditions: {
-            any: [
-              // any of the decider should allow entry
-              {
-                // decicder 2 - If wallet holds 1 NFT on polygon testnet
-                any: [
-                  {
-                    // criteria 1
-                    type: "PUSH", // define type that rules engine should go for
-                    category: "ERC721", // define it's ERC20 token that you want to check, supports ERC721 as well
-                    subcategory: "holder", // define if you are checking 'holder'
-                    data: {
-                      contract: `eip155:80001:${contractAddress}`, // contract address of token
-                      comparison: ">=", // what comparison needs to pass
-                      amount: 1, // amount that needs to passed
-                      decimals: 18,
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-        },
-      },
-    });
-    return createTokenGatedGroup.chatId;
-  };
-
-  // Close modal if group is successfully created
-  useEffect(() => {
-    if (setChatIDForTraderIsSuccess) {
-      setOpenRegisterTraderModal(false);
-    }
-  }, [setChatIDForTraderIsSuccess]);
 
   return (
     <>
@@ -238,14 +190,14 @@ export default function ApplicationLayout({ children }) {
                         Top Traders
                       </Link>
                       <Link
-                        href="/activity"
+                        href="/chat"
                         className={`rounded-md bg-gray-900 px-3 py-2 text-sm font-medium hover:text-white ${
-                          router.pathname === "/activity"
+                          router.pathname === "/chat"
                             ? "text-white bg-gray-700"
                             : "text-gray-300"
                         }`}
                       >
-                        Activity
+                        Chat
                       </Link>
                     </div>
                   </div>
@@ -399,76 +351,7 @@ export default function ApplicationLayout({ children }) {
         )}
       </Disclosure>
       <div>{children}</div>
-      {/* Dex.Chat Button Start */}
-      <button
-        type="button"
-        onClick={() => setShow(true)}
-        className="absolute right-6 bottom-6 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200"
-      >
-        Dex.Chat
-      </button>
-      {/* Dex.Chat Button End */}
-      {/* Dex.Chat Widget Start */}
-      <div
-        aria-live="assertive"
-        className="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-end sm:p-6"
-      >
-        <div className="flex h-4/6 w-full flex-col items-center space-y-4 sm:items-end justify-end">
-          {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
-          <Transition
-            show={show}
-            as={Fragment}
-            enter="transform ease-out duration-300 transition"
-            enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-            enterTo="translate-y-0 opacity-100 sm:translate-x-0"
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="h-full pointer-events-auto w-full max-w-xs overflow-hidden rounded-lg bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 border border-gray-700">
-              <div className="p-4">
-                <div className="flex items-start">
-                  {/* Widget Header Start */}
-                  <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <div className="flex items-center justify-between">
-                      <div className="uppercase text-gray-100 text-base font-bold">
-                        Dex.Tech
-                      </div>
-                      <button
-                        type="button"
-                        // id="sdk-trigger-id"
-                        className="ml-4 rounded-full bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                      >
-                        0.120 ETH
-                      </button>
-                    </div>
-                  </div>
-                  {/* Widget Header End */}
-                  {/* Widget Content Start */}
-                  <Chat
-                    account="0x7B540B1E4e54a9D20B2399A945A1EAf0628edF13"
-                    env="staging"
-                  />
-                  {/* Widget Content End */}
-                  {/* <div className="ml-4 flex flex-shrink-0">
-                    <button
-                      type="button"
-                      className="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                      onClick={() => {
-                        setShow(false);
-                      }}
-                    >
-                      <span className="sr-only">Close</span>
-                      <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-                    </button>
-                  </div> */}
-                </div>
-              </div>
-            </div>
-          </Transition>
-        </div>
-      </div>
-      {/* Dex.Chat Widget Start */}
+
       {/* Register Trader Modal Start */}
       <Transition.Root show={openRegisterTraderModal} as={Fragment}>
         <Dialog
@@ -558,24 +441,6 @@ export default function ApplicationLayout({ children }) {
                         value={inputs.contractSymbol}
                         className="block w-full border-0 p-0 text-white font-bold placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-gray-900"
                         placeholder="DGC"
-                      />
-                    </div>
-
-                    <div className="mt-3 rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-700 focus-within:ring-2 focus-within:ring-blue-600">
-                      <label
-                        htmlFor="groupChatName"
-                        className="block text-xs font-medium text-gray-200"
-                      >
-                        Group Chat Name
-                      </label>
-                      <input
-                        type="text"
-                        name="groupChatName"
-                        id="groupChatName"
-                        onChange={handleInput}
-                        value={inputs.groupChatName}
-                        className="block w-full border-0 p-0 text-white font-bold placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-gray-900"
-                        placeholder="Danny's Group Chat"
                       />
                     </div>
 

@@ -158,7 +158,7 @@ export default function Accessibiity() {
             <Paragraph>We are currently working to fix:</Paragraph>
             <ul className="list-disc text-zinc-700 text-xl">
               <li>
-                some websites we link to may not have been tested for their
+                some websites we Link href may not have been tested for their
                 accessibility
               </li>
               <li>

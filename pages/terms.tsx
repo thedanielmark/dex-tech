@@ -545,7 +545,7 @@ export default function Terms() {
               other materials that User may access on or through the Platform.
               Company reserves all rights in and to the Company Materials not
               expressly granted to Users in the Terms. You may not use any
-              NFTconomy Content to link to the Website or Content without our
+              NFTconomy Content to Link href the Website or Content without our
               express written permission. You may not use framing techniques to
               enclose any NFTconomy Content without our express written consent.
               In addition, the look and feel of the Site and Content, including
