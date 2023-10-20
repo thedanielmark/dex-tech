@@ -11,6 +11,7 @@ import ApplicationLayout from "@/components/Utilities/ApplicationLayout";
 import ConversationView from "@/views/ConversationView";
 import { findConversation } from "@/model/conversations";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 TimeAgo.addDefaultLocale(en);
 
@@ -56,34 +57,55 @@ export default function Chat({ children }: Props) {
   }, [conversationId]);
 
   return (
-    <ApplicationLayout>
-      <div className="mt-16 max-w-3xl mx-auto shadow-[0_0px_60px_0px_rgba(79,70,229,0.3)] rounded-3xl bg-gray-900 border border-gray-800 min-h-[500px] max-h-[500px]">
-        {client ? (
-          <div className="grid grid-cols-12 gap-x-5">
-            <div className="col-span-4">
-              {conversations?.length == 0 && <p>No conversations yet.</p>}
-              {conversations
-                ? conversations.map((conversation, i) => (
-                    <Link
-                      href={`/chat?conversationId=${conversation.topic}`}
-                      key={conversation.topic}
-                    >
-                      <ConversationCellView
-                        conversation={conversation}
-                        latestMessage={latestMessages[i]}
-                      />
-                    </Link>
-                  ))
-                : "Could not load conversations"}
+    <>
+      <Head>
+        <title>Chat - DexTech</title>
+        <style>
+          {`
+          .reset-last-message > a > div > div:last-child {
+            display: flex;
+            justify-content: start;
+          }
+
+          .reset-last-message > a > div > div:last-child > div > span {
+            background: transparent;
+            padding: 0px;
+            color:  #9ca3af;
+          }
+          `}
+        </style>
+      </Head>
+      <ApplicationLayout>
+        <div className="mt-16 p-2 max-w-3xl mx-auto shadow-[0_0px_60px_0px_rgba(79,70,229,0.3)] rounded-3xl bg-gray-900 border border-gray-800 min-h-[500px] max-h-[500px]">
+          {client ? (
+            <div className="grid grid-cols-12 gap-x-2">
+              <div className="col-span-4 reset-last-message flex flex-col space-y-2">
+                {conversations?.length == 0 && <p>No conversations yet.</p>}
+                {conversations
+                  ? conversations.map((conversation, i) => (
+                      <Link
+                        href={`/chat?conversationId=${conversation.topic}`}
+                        key={conversation.topic}
+                      >
+                        <ConversationCellView
+                          conversation={conversation}
+                          latestMessage={latestMessages[i]}
+                        />
+                      </Link>
+                    ))
+                  : "Could not load conversations"}
+              </div>
+              <div className="col-span-8 border border-gray-800 p-2 rounded-3xl">
+                {conversation && (
+                  <ConversationView conversation={conversation} />
+                )}
+              </div>
             </div>
-            <div className="col-span-8">
-              {conversation && <ConversationView conversation={conversation} />}
-            </div>
-          </div>
-        ) : (
-          <LoginView />
-        )}
-      </div>
-    </ApplicationLayout>
+          ) : (
+            <LoginView />
+          )}
+        </div>
+      </ApplicationLayout>
+    </>
   );
 }

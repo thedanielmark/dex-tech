@@ -12,10 +12,10 @@ export default function ConversationCellView({
   latestMessage: Message | undefined;
 }): ReactElement {
   return (
-    <div className="mt-2 p-2 bg-gray-900 border border-gray-700 rounded-lg">
+    <div className="p-2 bg-gray-900 border border-gray-800 rounded-2xl">
       <div className="flex items-center justify-between space-x-2">
         <div className="hover:underline">
-          <span className="text-gray-100 text-base font-bold">
+          <span className="text-gray-100 text-sm font-bold">
             {conversation.title || shortAddress(conversation.peerAddress)}
           </span>{" "}
         </div>

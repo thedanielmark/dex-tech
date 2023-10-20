@@ -68,7 +68,7 @@ export function Content({
         className={`flex ${message.sentByMe ? "justify-end" : "justify-start"}`}
       >
         <span
-          className={`px-3 py-1 text-white rounded-full ${
+          className={`px-3 py-1 text-white rounded-full text-sm ${
             message.sentByMe ? "bg-blue-500" : "bg-gray-800"
           }`}
         >

@@ -66,12 +66,12 @@ export default function ConversationView({
           `}
         </style>
       </Head>
-      {/* <Header>
+      <Header>
         <div className="flex justify-between font-bold">
-          <span className="flex-grow">
+          <span className="flex-grow text-white">
             {liveConversation?.title || conversation.peerAddress}
           </span>
-          <div className="space-x-4">
+          {/* <div className="space-x-4">
             <button
               className="inline-block space-x-1 text-zinc-600"
               onClick={() => {
@@ -80,20 +80,20 @@ export default function ConversationView({
             >
               <Cog6ToothIcon className="h-4 inline-block align-top" />
               <span>Settings</span>
-            </button>
+            </button> 
             <Link className="text-blue-700" href="/">
               Go Back
-            </Link>
-          </div>
+            </Link> 
+          </div>*/}
         </div>
-        {isShowingSettings && (
+        {/* {isShowingSettings && (
           <ConversationSettingsView
             conversation={conversation}
             dismiss={() => setIsShowingSettings(false)}
           />
-        )}
-      </Header> */}
-      <div className="mt-5 h-[420px] overflow-y-scroll">
+        )} */}
+      </Header>
+      <div className="mt-2 h-[365px] overflow-y-scroll">
         {messages?.length == 0 && <p>No messages yet.</p>}
         {messages ? (
           messages.reduce((acc: ReactElement[], message: Message, index) => {
