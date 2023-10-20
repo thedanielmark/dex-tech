@@ -56,21 +56,37 @@ function AttachmentContent({ message }: { message: Message }): ReactElement {
 export function Content({
   content,
   contentType,
+  message,
 }: {
   content: any;
   contentType: ContentTypeId;
+  message: any;
 }): ReactElement {
   if (ContentTypeText.sameAs(contentType)) {
     return (
-      <span className="px-2 py-1 bg-blue-500 text-white rounded-lg">
-        {content}
-      </span>
+      <div
+        className={`flex ${message.sentByMe ? "justify-end" : "justify-start"}`}
+      >
+        <span
+          className={`px-3 py-1 text-white rounded-full ${
+            message.sentByMe ? "bg-blue-500" : "bg-gray-800"
+          }`}
+        >
+          {content}
+        </span>
+      </div>
     );
   }
 
   if (ContentTypeReply.sameAs(contentType)) {
     const reply: Reply = content;
-    return <Content content={reply.content} contentType={reply.contentType} />;
+    return (
+      <Content
+        content={reply.content}
+        contentType={reply.contentType}
+        message={message}
+      />
+    );
   }
 
   return (
@@ -96,6 +112,7 @@ export function MessageContent({
     <Content
       content={message.content}
       contentType={message.contentType as ContentTypeId}
+      message={message}
     />
   );
 }
@@ -108,18 +125,18 @@ export default function MessageCellView({
   readReceiptText: string | undefined;
 }): ReactElement {
   return (
-    <div className="flex">
+    <div>
       {/* <span
         title={message.sentByMe ? "You" : message.senderAddress}
         className={message.sentByMe ? "text-zinc-500" : "text-green-500"}
       >
         {shortAddress(message.senderAddress)}:
       </span> */}
-      <div className="ml-2">
+      <div className="my-2">
         <MessageContent message={message} />
-        <MessageRepliesView message={message} />
+        {/* <MessageRepliesView message={message} />
         <ReactionsView message={message} />
-        <ReadReceiptView readReceiptText={readReceiptText} />
+        <ReadReceiptView readReceiptText={readReceiptText} /> */}
       </div>
     </div>
   );
