@@ -3,7 +3,7 @@ import db, { Message, MessageReaction } from "./db";
 import { findConversation, getXMTPConversation } from "./conversations";
 import { Mutex } from "async-mutex";
 import { ContentTypeReaction, Reaction } from "@xmtp/content-type-reaction";
-import { DexTech } from "../utilities/DexTech";
+import { DexTech } from "@/utilities/DexTech";
 import {
   ContentTypeAttachment,
   ContentTypeRemoteAttachment,

@@ -33,7 +33,7 @@ export default function ConversationListView(): ReactElement {
       {conversations?.length == 0 && <p>No conversations yet.</p>}
       {conversations
         ? conversations.map((conversation, i) => (
-            <Link href={`c/${conversation.topic}`} key={conversation.topic}>
+            <Link href={`chat/${conversation.topic}`} key={conversation.topic}>
               <ConversationCellView
                 conversation={conversation}
                 latestMessage={latestMessages[i]}

@@ -35,11 +35,12 @@ export default function ConversationView({
 
   useEffect(() => {
     window.scrollTo({ top: 100000, behavior: "smooth" });
+    console.log("Conv from CV: ", conversation);
   }, [messages?.length]);
 
   return (
-    <div className="p-4 pb-20 pt-14">
-      <Header>
+    <div className="relative p-4 pb-20 pt-14">
+      {/* <Header>
         <div className="flex justify-between font-bold">
           <span className="flex-grow">
             {liveConversation?.title || conversation.peerAddress}
@@ -54,7 +55,7 @@ export default function ConversationView({
               <Cog6ToothIcon className="h-4 inline-block align-top" />
               <span>Settings</span>
             </button>
-            <Link className="text-blue-700" to="/">
+            <Link className="text-blue-700" href="/">
               Go Back
             </Link>
           </div>
@@ -65,7 +66,7 @@ export default function ConversationView({
             dismiss={() => setIsShowingSettings(false)}
           />
         )}
-      </Header>
+      </Header> */}
       <div>
         {messages?.length == 0 && <p>No messages yet.</p>}
         {messages ? (

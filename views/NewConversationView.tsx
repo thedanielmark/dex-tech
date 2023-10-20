@@ -67,7 +67,7 @@ export default function NewConversationView(): ReactElement {
       <Header>
         <div className="flex justify-between">
           <h1>Make a new conversation</h1>
-          <Link className="text-blue-600" to="/">
+          <Link className="text-blue-600" href="/">
             Go Back
           </Link>
         </div>

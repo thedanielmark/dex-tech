@@ -20,6 +20,7 @@ import AttachmentPreviewView from "./AttachmentPreviewView";
 import { MessageContent } from "./MessageCellView";
 import { shortAddress } from "../util/shortAddress";
 import { ContentTypeReply, Reply } from "@xmtp/content-type-reply";
+import { PaperAirplaneIcon, PaperClipIcon } from "@heroicons/react/24/outline";
 
 export default function MessageComposerView({
   conversation,
@@ -31,8 +32,6 @@ export default function MessageComposerView({
   const [textInput, setTextInput] = useState("");
 
   const fileField = createRef<HTMLInputElement>();
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const client = useClient()!;
 
   function onSubmit(e: FormEvent) {
@@ -77,7 +76,7 @@ export default function MessageComposerView({
   }
 
   return (
-    <div className="fixed left-0 right-0 bottom-0 p-4 bg-white dark:bg-zinc-900">
+    <div className="absolute left-0 right-0 bottom-1 bg-gray-900 rounded-3xl border border-zinc-800">
       <input
         ref={fileField}
         type="file"
@@ -85,7 +84,7 @@ export default function MessageComposerView({
         style={{ position: "absolute", marginLeft: "-10000px" }}
       />
       <form className="flex space-x-2 items-end" onSubmit={onSubmit}>
-        <div className=" flex-grow border rounded dark:bg-black dark:border-zinc-700 p-2">
+        {/* <div className="flex-grow border rounded bg-black p-2">
           {attachment && (
             <AttachmentPreviewView
               attachment={attachment}
@@ -97,8 +96,8 @@ export default function MessageComposerView({
           <div className="flex space-x-2">
             <button
               type="button"
-              className="bg-blue-500 w-8 h-8 text-white rounded-full"
-              onClick={() => fileField.current?.click()}
+              className="bg-blue-500 text-white rounded-full"
+              // onClick={() => fileField.current?.click()}
             >
               +
             </button>
@@ -107,7 +106,7 @@ export default function MessageComposerView({
               placeholder={
                 attachment ? "Press Send to send attachment" : "Type a message"
               }
-              className="flex-grow outline-none dark:bg-black"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               name="text"
               autoComplete="off"
               disabled={!!attachment}
@@ -115,11 +114,46 @@ export default function MessageComposerView({
               onChange={(e) => setTextInput(e.target.value)}
             />
           </div>
-        </div>
+        </div> */}
 
-        <Button type="submit" className="mb-2">
+        {/* <Button type="submit" className="mb-2">
           Send
-        </Button>
+        </Button> */}
+
+        <div className="w-full p-2">
+          <div className="flex rounded-md shadow-sm">
+            <div className="w-full relative flex flex-grow items-stretch focus-within:z-10">
+              {/* <div
+                className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+                onClick={() => fileField.current?.click()}
+              >
+                <PaperClipIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+              </div> */}
+              <input
+                type="text"
+                name="text"
+                id="text"
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                className="block w-full rounded-none rounded-l-md border-0 py-1.5 bg-gray-900 text-white ring-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                placeholder="John Smith"
+              />
+            </div>
+            <button
+              type="submit"
+              className="relative -ml-px flex items-center space-x-1.5 rounded-3xl px-3 py-2 text-sm font-semibold bg-blue-600 text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            >
+              <span className="ml-1">Send</span>
+              <PaperAirplaneIcon
+                className="ml-1 h-5 w-5 text-gray-400"
+                aria-hidden="true"
+              />
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );
