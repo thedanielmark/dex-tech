@@ -36,7 +36,6 @@ export default function ConversationView({
 
   useEffect(() => {
     window.scrollTo({ top: 100000, behavior: "smooth" });
-    console.log("Conv from CV: ", conversation);
   }, [messages?.length]);
 
   return (

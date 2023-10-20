@@ -42,19 +42,23 @@ export default function Chat({ children }: Props) {
     (async () => {
       const conversationIdTemp: any = router.query.conversationId;
       setConversationId(conversationIdTemp);
-      console.log(conversationId);
+      console.log("Changed conv ID: ", conversationId);
     })();
-  }, [conversationId, router.query.conversationId]);
+  }, [conversation, conversationId, router.query.conversationId]);
 
   useEffect(() => {
     (async () => {
       if (conversationId) {
         const conversationTemp = await findConversation(conversationId);
         setConversation(conversationTemp);
-        console.log(conversationTemp);
+        console.log("Changed conv: ", conversationTemp);
       }
     })();
   }, [conversationId]);
+
+  useEffect(() => {
+    console.log("Conv Var: ", conversation);
+  }, [conversation]);
 
   return (
     <>
