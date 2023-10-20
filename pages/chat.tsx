@@ -57,9 +57,9 @@ export default function Chat({ children }: Props) {
 
   return (
     <ApplicationLayout>
-      <div className="mt-16 max-w-3xl mx-auto shadow-[0_0px_60px_0px_rgba(79,70,229,0.3)] rounded-3xl bg-gray-900 border border-gray-800 p-2">
+      <div className="mt-16 max-w-3xl mx-auto shadow-[0_0px_60px_0px_rgba(79,70,229,0.3)] rounded-3xl bg-gray-900 border border-gray-800 min-h-[500px] max-h-[500px]">
         {client ? (
-          <div className="grid grid-cols-12">
+          <div className="grid grid-cols-12 gap-x-5">
             <div className="col-span-4">
               {conversations?.length == 0 && <p>No conversations yet.</p>}
               {conversations
@@ -76,7 +76,7 @@ export default function Chat({ children }: Props) {
                   ))
                 : "Could not load conversations"}
             </div>
-            <div className="col-span-8 overflow-hidden">
+            <div className="col-span-8">
               {conversation && <ConversationView conversation={conversation} />}
             </div>
           </div>

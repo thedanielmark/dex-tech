@@ -16,7 +16,8 @@ export default function LoginView(): ReactElement {
   async function generateWallet() {
     const wallet = Wallet.createRandom();
     const client = await Client.create(wallet, {
-      env: "dev",
+      // env: "dev",
+      env: "production",
     });
 
     // Don't do this in real life.

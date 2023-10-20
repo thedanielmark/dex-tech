@@ -76,7 +76,7 @@ export default function MessageComposerView({
   }
 
   return (
-    <div className="absolute left-0 right-0 bottom-1 bg-gray-900 rounded-3xl border border-zinc-800">
+    <div className="bg-gray-900 rounded-3xl border border-zinc-800">
       <input
         ref={fileField}
         type="file"
@@ -139,16 +139,16 @@ export default function MessageComposerView({
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 className="block w-full rounded-none rounded-l-md border-0 py-1.5 bg-gray-900 text-white ring-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                placeholder="John Smith"
+                placeholder="Never gonna give you up..."
               />
             </div>
             <button
               type="submit"
-              className="relative -ml-px flex items-center space-x-1.5 rounded-3xl px-3 py-2 text-sm font-semibold bg-blue-600 text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              className="ml-px flex items-center space-x-1.5 rounded-3xl px-3 py-2 text-sm font-semibold bg-blue-600 text-gray-200 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
               <span className="ml-1">Send</span>
               <PaperAirplaneIcon
-                className="ml-1 h-5 w-5 text-gray-400"
+                className="ml-2 h-5 w-5 text-gray-200"
                 aria-hidden="true"
               />
             </button>

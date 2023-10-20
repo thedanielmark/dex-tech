@@ -40,7 +40,8 @@ export default function ClientProvider({
 
       const wallet = new Wallet(insecurePrivateKey);
       const client = await Client.create(wallet, {
-        env: "dev",
+        // env: "dev",
+        env: "production",
       });
 
       client.registerCodec(new AttachmentCodec());

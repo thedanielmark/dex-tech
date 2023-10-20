@@ -61,7 +61,11 @@ export function Content({
   contentType: ContentTypeId;
 }): ReactElement {
   if (ContentTypeText.sameAs(contentType)) {
-    return <span>{content}</span>;
+    return (
+      <span className="px-2 py-1 bg-blue-500 text-white rounded-lg">
+        {content}
+      </span>
+    );
   }
 
   if (ContentTypeReply.sameAs(contentType)) {
@@ -105,12 +109,12 @@ export default function MessageCellView({
 }): ReactElement {
   return (
     <div className="flex">
-      <span
+      {/* <span
         title={message.sentByMe ? "You" : message.senderAddress}
         className={message.sentByMe ? "text-zinc-500" : "text-green-500"}
       >
         {shortAddress(message.senderAddress)}:
-      </span>
+      </span> */}
       <div className="ml-2">
         <MessageContent message={message} />
         <MessageRepliesView message={message} />

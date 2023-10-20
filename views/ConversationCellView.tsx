@@ -24,11 +24,11 @@ export default function ConversationCellView({
         </div>
       </div>
       {latestMessage ? (
-        <div className="block text-gray-200">
+        <div className="block text-sm text-gray-200">
           <MessageContent message={latestMessage} />
         </div>
       ) : (
-        <div className="block text-gray-500">No messages yet.</div>
+        <div className="block text-sm text-gray-400">No messages yet.</div>
       )}
     </div>
   );

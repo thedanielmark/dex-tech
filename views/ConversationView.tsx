@@ -11,6 +11,7 @@ import ConversationSettingsView from "./ConversationSettingsView";
 import { ContentTypeId } from "@xmtp/xmtp-js";
 import { ContentTypeReaction } from "@xmtp/content-type-reaction";
 import { useReadReceipts } from "../hooks/useReadReceipts";
+import Head from "next/head";
 
 const appearsInMessageList = (message: Message): boolean => {
   if (ContentTypeReaction.sameAs(message.contentType as ContentTypeId)) {
@@ -39,7 +40,32 @@ export default function ConversationView({
   }, [messages?.length]);
 
   return (
-    <div className="relative p-4 pb-20 pt-14">
+    <div>
+      <Head>
+        <style>
+          {`
+          /* width */
+          ::-webkit-scrollbar {
+            width: 5px;
+          }
+          
+          /* Track */
+          ::-webkit-scrollbar-track {
+            background: #111827;
+          }
+          
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+          }
+          
+          /* Handle on hover */
+          ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+          }
+          `}
+        </style>
+      </Head>
       {/* <Header>
         <div className="flex justify-between font-bold">
           <span className="flex-grow">
@@ -67,7 +93,7 @@ export default function ConversationView({
           />
         )}
       </Header> */}
-      <div>
+      <div className="mt-5 h-[420px] overflow-y-scroll">
         {messages?.length == 0 && <p>No messages yet.</p>}
         {messages ? (
           messages.reduce((acc: ReactElement[], message: Message, index) => {

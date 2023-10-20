@@ -34,7 +34,8 @@ function WalletSetter({
       (async () => {
         try {
           const client = await Client.create(signer, {
-            env: "dev",
+            // env: "dev",
+            env: "production",
           });
 
           setClient(client);
