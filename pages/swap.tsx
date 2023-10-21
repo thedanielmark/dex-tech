@@ -105,7 +105,7 @@ export default function Home() {
 
       <ApplicationLayout>
         <div className="w-full">
-          <div className="mt-16 mx-auto max-w-xl shadow-[0_0px_60px_0px_rgba(79,70,229,0.3)] rounded-3xl">
+          <div className="mt-16 mx-auto max-w-xl shadow-[0_0px_60px_0px_rgba(37,99,235,0.3)] rounded-3xl">
             {signer && (
               <SwapWidget
                 width="100%"

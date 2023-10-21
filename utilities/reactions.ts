@@ -1,9 +1,8 @@
 import { Client, ContentTypeId, ContentTypeText } from "@xmtp/xmtp-js";
-import db, { Message, MessageReaction } from "./db";
-import { findConversation, getXMTPConversation } from "./conversations";
+import db, { Message, MessageReaction } from "../model/db";
+import { findConversation, getXMTPConversation } from "../model/conversations";
 import { Mutex } from "async-mutex";
 import { ContentTypeReaction, Reaction } from "@xmtp/content-type-reaction";
-import { DexTech } from "@/utilities/DexTech";
 import {
   ContentTypeAttachment,
   ContentTypeRemoteAttachment,
@@ -60,13 +59,13 @@ export async function addReaction(
     schema: "shortcode",
   };
 
-  const xmtpConversation = await getXMTPConversation(client, conversation);
-  await xmtpConversation.send(reaction, {
-    contentType: ContentTypeReaction,
-    contentFallback: `${DexTech(client.address)} reacted ${getReactionTo(
-      message
-    )}with ${reaction.content}`,
-  });
+  // const xmtpConversation = await getXMTPConversation(client, conversation);
+  // await xmtpConversation.send(reaction, {
+  //   contentType: ContentTypeReaction,
+  //   contentFallback: `${client.address} reacted ${getReactionTo(message)}with ${
+  //     reaction.content
+  //   }`,
+  // });
 }
 
 export async function removeReaction(
@@ -103,13 +102,13 @@ export async function removeReaction(
     schema: "shortcode",
   };
 
-  const xmtpConversation = await getXMTPConversation(client, conversation);
-  await xmtpConversation.send(reaction, {
-    contentType: ContentTypeReaction,
-    contentFallback: `${DexTech(client.address)} unreacted ${getReactionTo(
-      message
-    )}with ${reaction.content}`,
-  });
+  // const xmtpConversation = await getXMTPConversation(client, conversation);
+  // await xmtpConversation.send(reaction, {
+  //   contentType: ContentTypeReaction,
+  //   contentFallback: `${client.address} unreacted ${getReactionTo(
+  //     message
+  //   )}with ${reaction.content}`,
+  // });
 }
 
 export async function deleteReaction(reaction: MessageReaction) {

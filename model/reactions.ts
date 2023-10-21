@@ -60,13 +60,13 @@ export async function addReaction(
     schema: "shortcode",
   };
 
-  const xmtpConversation = await getXMTPConversation(client, conversation);
-  await xmtpConversation.send(reaction, {
-    contentType: ContentTypeReaction,
-    contentFallback: `${shortAddress(client.address)} reacted ${getReactionTo(
-      message
-    )}with ${reaction.content}`,
-  });
+  // const xmtpConversation = await getXMTPConversation(client, conversation);
+  // await xmtpConversation.send(reaction, {
+  //   contentType: ContentTypeReaction,
+  //   contentFallback: `${shortAddress(client.address)} reacted ${getReactionTo(
+  //     message
+  //   )}with ${reaction.content}`,
+  // });
 }
 
 export async function removeReaction(
@@ -103,13 +103,13 @@ export async function removeReaction(
     schema: "shortcode",
   };
 
-  const xmtpConversation = await getXMTPConversation(client, conversation);
-  await xmtpConversation.send(reaction, {
-    contentType: ContentTypeReaction,
-    contentFallback: `${shortAddress(client.address)} unreacted ${getReactionTo(
-      message
-    )}with ${reaction.content}`,
-  });
+  // const xmtpConversation = await getXMTPConversation(client, conversation);
+  // await xmtpConversation.send(reaction, {
+  //   contentType: ContentTypeReaction,
+  //   contentFallback: `${shortAddress(client.address)} unreacted ${getReactionTo(
+  //     message
+  //   )}with ${reaction.content}`,
+  // });
 }
 
 export async function deleteReaction(reaction: MessageReaction) {

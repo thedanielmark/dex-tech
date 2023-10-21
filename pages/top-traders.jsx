@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Image from "next/image";
+import Link from "next/link";
 import { superShortenAddress } from "@/utilities/shortenAddress";
 import formatCurrency from "@/utilities/formatCurrency";
 import {
@@ -44,9 +44,6 @@ export default function TopTraders() {
       .catch(function (error) {
         // handle error
         console.log(error);
-      })
-      .finally(function () {
-        // always executed
       });
   }, []);
 
@@ -217,7 +214,7 @@ export default function TopTraders() {
 
       <ApplicationLayout>
         <div className="w-full">
-          <div className="mt-16 mx-auto max-w-3xl border border-gray-800 shadow-[0_0px_60px_0px_rgba(79,70,229,0.3)] rounded-3xl p-3">
+          <div className="mt-16 mx-auto max-w-3xl border border-gray-800 shadow-[0_0px_60px_0px_rgba(37,99,235,0.3)] rounded-3xl p-3">
             {/* Table Start */}
             <div className="px-5">
               {traders && traders.length > 0 && (
@@ -258,7 +255,11 @@ export default function TopTraders() {
                     {traders.map((trader) => (
                       <tr key={trader._id}>
                         <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                          <div className="flex items-center">
+                          <Link
+                            href={`https://app.zerion.io/${trader.id}`}
+                            className="flex items-center"
+                            target="_blank"
+                          >
                             <div className="h-12 w-12 flex-shrink-0">
                               <BlockiesSvg
                                 address={trader.id}
@@ -279,7 +280,7 @@ export default function TopTraders() {
                                 )}{" "}
                               </div>
                             </div>
-                          </div>
+                          </Link>
                         </td>
                         <td
                           className={`whitespace-nowrap px-3 py-5 font-bold text-base ${
