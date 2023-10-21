@@ -1,3 +1,5 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { useClient } from "@/hooks/useClient";
 import LoginView from "@/views/LoginView";
 import TimeAgo from "javascript-time-ago";
@@ -10,8 +12,6 @@ import en from "javascript-time-ago/locale/en.json";
 import ApplicationLayout from "@/components/Utilities/ApplicationLayout";
 import ConversationView from "@/views/ConversationView";
 import { findConversation } from "@/model/conversations";
-import { useRouter } from "next/router";
-import Head from "next/head";
 
 TimeAgo.addDefaultLocale(en);
 
@@ -68,7 +68,7 @@ export default function Chat({ children }: Props) {
   return (
     <>
       <Head>
-        <title>Chat - DexTech</title>
+        <title>Chat | DexTech - The First Gamified Social DEX</title>
         <style>
           {`
           .reset-last-message > a > div > div:last-child {

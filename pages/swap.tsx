@@ -1,16 +1,15 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import ApplicationLayout from "@/components/Utilities/ApplicationLayout";
 import { darkTheme, SwapWidget } from "@uniswap/widgets";
 import { useEthersSigner } from "@/utilities/ethers";
 import "@uniswap/widgets/fonts.css";
-import { useEffect } from "react";
 
 const jsonRpcUrlMap = {
   1: ["https://eth-mainnet.g.alchemy.com/v2/toazB2iE1mnm6oddkzmN0dTgBUXE03UD"],
 };
 
 export default function Home() {
-  // const { address } = useAccount();
   const signer: any = useEthersSigner();
 
   useEffect(() => {
@@ -20,56 +19,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>
-          Dashboard - DexTech | Democratizing EV Technology using the Blockchain
-        </title>
-        <meta
-          name="title"
-          content="Notifications - DexTech | Push Notification Service for the Neo Blockchain"
-        />
-        <meta
-          name="description"
-          content="Stay informed and in-the-know with real-time push
-            notifications on transactions, smart contracts, and network
-            developments. Empower your Neo experience with DexTech's
-            timely alerts, ensuring you never miss a beat on the Neo
-            Blockchain."
-        />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://neocast.blitzcrafthq.com" />
-        <meta
-          property="og:title"
-          content="Notifications - DexTech | Push Notification Service for the Neo Blockchain"
-        />
-        <meta
-          property="og:description"
-          content="Stay informed and in-the-know with real-time push
-            notifications on transactions, smart contracts, and network
-            developments. Empower your Neo experience with DexTech's
-            timely alerts, ensuring you never miss a beat on the Neo
-            Blockchain."
-        />
-        <meta property="og:image" content="/meta-image.jpg" />
-
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:url"
-          content="https://neocast.blitzcrafthq.com/"
-        />
-        <meta
-          property="twitter:title"
-          content="Notifications - DexTech | Push Notification Service for the Neo Blockchain"
-        />
-        <meta
-          property="twitter:description"
-          content="Stay informed and in-the-know with real-time push
-            notifications on transactions, smart contracts, and network
-            developments. Empower your Neo experience with DexTech's
-            timely alerts, ensuring you never miss a beat on the Neo
-            Blockchain."
-        />
-        <meta property="twitter:image" content="/meta-image.jpg" />
+        <title>Dashboard | DexTech - The First Gamified Social DEX</title>
         <style>
           {`input:-webkit-autofill,
           input:-webkit-autofill:hover, 
