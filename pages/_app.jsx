@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   darkTheme,
   getDefaultWallets,
+  midnightTheme,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, mainnet, WagmiConfig } from "wagmi";
@@ -13,27 +14,6 @@ import "@/styles/globals.css";
 import "@/styles/index.scss";
 import WalletContext from "@/contexts/WalletContext";
 
-// const AltheaEVM = {
-//   id: 417834,
-//   name: "AltheaEVM DevNet",
-//   network: "AltheaEVM DevNet",
-//   iconUrl:
-//     "https://cdn.dorahacks.io/static/files/188c028468557368d12717c46b1bd63e.jpg",
-//   iconBackground: "#fff",
-//   nativeCurrency: {
-//     decimals: 18,
-//     name: "AltheaEVM GAS",
-//     symbol: "GAS",
-//   },
-//   rpcUrls: {
-//     public: { http: ["https://althea.zone:8545/"] },
-//     default: { http: ["https://althea.zone:8545/"] },
-//   },
-//   blockExplorers: {
-//     default: { name: "AltheaTrace", url: "https://evm.ngd.network/" },
-//   },
-//   testnet: false,
-// };
 const MumbaiEVM = {
   id: 80001,
   name: "Mumbai",
@@ -47,8 +27,8 @@ const MumbaiEVM = {
     decimals: 18,
   },
   rpcUrls: {
-    public: { http: ["https://polygon-mumbai-bor.publicnode.com"] },
-    default: { http: ["https://polygon-mumbai-bor.publicnode.com"] },
+    public: { http: ["https://rpc.ankr.com/polygon_mumbai"] },
+    default: { http: ["https://rpc.ankr.com/polygon_mumbai"] },
   },
   blockExplorers: {
     default: { name: "polygonscan", url: "https://mumbai.polygonscan.com" },
@@ -87,7 +67,7 @@ export default function App({ Component, pageProps }) {
           <WagmiConfig config={wagmiConfig}>
             <RainbowKitProvider
               chains={chains}
-              theme={darkTheme({
+              theme={midnightTheme({
                 accentColor: "#2563eb",
                 accentColorForeground: "white",
                 borderRadius: "large",

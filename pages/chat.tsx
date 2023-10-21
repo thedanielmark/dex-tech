@@ -27,6 +27,7 @@ export default function Chat({ children }: Props) {
   );
   const [conversationId, setConversationId] = useState<any>(null);
   const [conversation, setConversation] = useState<any>(null);
+  const [conversationLoader, setConversationLoader] = useState<boolean>(true);
   //   const [conversationObj, setConversationObj] = useState<any>();
   const conversations = useConversations(client);
   const latestMessages = useLatestMessages(conversations);
@@ -39,26 +40,30 @@ export default function Chat({ children }: Props) {
   }, [readReceiptsEnabled]);
 
   useEffect(() => {
-    (async () => {
-      const conversationIdTemp: any = router.query.conversationId;
-      setConversationId(conversationIdTemp);
-      console.log("Changed conv ID: ", conversationId);
-    })();
-  }, [conversation, conversationId, router.query.conversationId]);
+    // (async () => {
+    const conversationIdTemp: any = router.query.conversationId;
+    setConversationId(conversationIdTemp);
+    // console.log("Changed conv ID: ", conversationId);
+    // })();
+  }, [router.query.conversationId]);
 
   useEffect(() => {
     (async () => {
       if (conversationId) {
+        setConversationLoader(true);
         const conversationTemp = await findConversation(conversationId);
         setConversation(conversationTemp);
-        console.log("Changed conv: ", conversationTemp);
+        setConversationLoader(false);
+        // console.log("Changed conv: ", conversationTemp);
       }
     })();
   }, [conversationId]);
 
   useEffect(() => {
-    console.log("Conv Var: ", conversation);
-  }, [conversation]);
+    const conversationIdTemp: any = router.query.conversationId;
+    setConversationId(conversationIdTemp);
+    console.log(router);
+  }, [router]);
 
   return (
     <>
@@ -74,7 +79,8 @@ export default function Chat({ children }: Props) {
           .reset-last-message > a > div > div:last-child > div > span {
             background: transparent;
             padding: 0px;
-            color:  #9ca3af;
+            color:  #4b5563;
+            font-size: xs;
           }
           `}
         </style>
@@ -100,7 +106,7 @@ export default function Chat({ children }: Props) {
                   : "Could not load conversations"}
               </div>
               <div className="col-span-8 border border-gray-800 p-2 rounded-3xl">
-                {conversation && (
+                {!conversationLoader && (
                   <ConversationView conversation={conversation} />
                 )}
               </div>

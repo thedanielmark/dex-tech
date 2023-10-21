@@ -1,13 +1,13 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect } from "react";
 import { Conversation, Message } from "../model/db";
 import { useMessages } from "../hooks/useMessages";
 import MessageComposerView from "./MessageComposerView";
 import MessageCellView from "./MessageCellView";
-import Link from "next/link";
+// import Link from "next/link";
 import Header from "../components/Header";
-import { Cog6ToothIcon } from "@heroicons/react/24/solid";
+// import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { useLiveConversation } from "../hooks/useLiveConversation";
-import ConversationSettingsView from "./ConversationSettingsView";
+// import ConversationSettingsView from "./ConversationSettingsView";
 import { ContentTypeId } from "@xmtp/xmtp-js";
 import { ContentTypeReaction } from "@xmtp/content-type-reaction";
 import { useReadReceipts } from "../hooks/useReadReceipts";
@@ -27,16 +27,18 @@ export default function ConversationView({
   conversation: Conversation;
 }): ReactElement {
   const liveConversation = useLiveConversation(conversation);
-
   const messages = useMessages(conversation);
-
   const showReadReceipt = useReadReceipts(conversation);
-
-  const [isShowingSettings, setIsShowingSettings] = useState(false);
+  // const [isShowingSettings, setIsShowingSettings] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 100000, behavior: "smooth" });
+    console.log(messages);
   }, [messages?.length]);
+
+  useEffect(() => {
+    console.log("Conversations updated: ", conversation);
+  }, [conversation]);
 
   return (
     <div>
@@ -65,10 +67,10 @@ export default function ConversationView({
           `}
         </style>
       </Head>
-      <Header>
+      <Header peerAddress={conversation.peerAddress}>
         <div className="flex justify-between font-bold">
-          <span className="flex-grow text-white">
-            {liveConversation?.title || conversation.peerAddress}
+          <span className="flex-grow text-white font-black">
+            Chatting with {liveConversation?.title || conversation.peerAddress}
           </span>
           {/* <div className="space-x-4">
             <button
@@ -103,6 +105,7 @@ export default function ConversationView({
                   key={message.id}
                   message={message}
                   readReceiptText={showRead ? "Read" : undefined}
+                  peerAddress={conversation.peerAddress}
                 />
               );
             }

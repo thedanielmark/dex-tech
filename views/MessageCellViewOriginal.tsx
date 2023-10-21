@@ -11,7 +11,6 @@ import { ContentTypeReply, Reply } from "@xmtp/content-type-reply";
 import MessageRepliesView from "./MessageRepliesView";
 import ReactionsView from "./ReactionsView";
 import ReadReceiptView from "./ReadReceiptView";
-import BlockiesSvg from "blockies-react-svg";
 
 function ImageAttachmentContent({
   attachment,
@@ -58,40 +57,23 @@ export function Content({
   content,
   contentType,
   message,
-  peerAddress,
 }: {
   content: any;
   contentType: ContentTypeId;
   message: any;
-  peerAddress: any;
 }): ReactElement {
   if (ContentTypeText.sameAs(contentType)) {
     return (
       <div
         className={`flex ${message.sentByMe ? "justify-end" : "justify-start"}`}
       >
-        <div className="flex space-x-2">
-          {!message.sentByMe && (
-            <div className="relative h-7 w-7">
-              <BlockiesSvg
-                address={peerAddress}
-                size={8}
-                scale={10}
-                caseSensitive={false}
-                className="absolute top-3 h-7 w-7 rounded-full"
-              />
-            </div>
-          )}
-          <span
-            className={`px-3 py-1 text-white text-sm ${
-              message.sentByMe
-                ? "bg-blue-500 rounded-l-full rounded-tr-full"
-                : "bg-gray-700 rounded-r-full rounded-tl-full"
-            }`}
-          >
-            {content}
-          </span>
-        </div>
+        <span
+          className={`px-3 py-1 text-white rounded-full text-sm ${
+            message.sentByMe ? "bg-blue-500" : "bg-gray-800"
+          }`}
+        >
+          {content}
+        </span>
       </div>
     );
   }
@@ -103,7 +85,6 @@ export function Content({
         content={reply.content}
         contentType={reply.contentType}
         message={message}
-        peerAddress={peerAddress}
       />
     );
   }
@@ -117,10 +98,8 @@ export function Content({
 
 export function MessageContent({
   message,
-  peerAddress,
 }: {
   message: Message;
-  peerAddress: any;
 }): ReactElement {
   if (
     ContentTypeAttachment.sameAs(message.contentType as ContentTypeId) ||
@@ -134,7 +113,6 @@ export function MessageContent({
       content={message.content}
       contentType={message.contentType as ContentTypeId}
       message={message}
-      peerAddress={peerAddress}
     />
   );
 }
@@ -142,11 +120,9 @@ export function MessageContent({
 export default function MessageCellView({
   message,
   readReceiptText,
-  peerAddress,
 }: {
   message: Message;
   readReceiptText: string | undefined;
-  peerAddress: any;
 }): ReactElement {
   return (
     <div>
@@ -157,7 +133,7 @@ export default function MessageCellView({
         {shortAddress(message.senderAddress)}:
       </span> */}
       <div className="my-2">
-        <MessageContent message={message} peerAddress={peerAddress} />
+        <MessageContent message={message} />
         {/* <MessageRepliesView message={message} />
         <ReactionsView message={message} />
         <ReadReceiptView readReceiptText={readReceiptText} /> */}

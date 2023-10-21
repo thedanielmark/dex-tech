@@ -7,4 +7,4 @@ export const CONTRACT_ABIS = {
 };
 
 export const CONTRACT_ADDRESS: Address =
-  "0xA7e36B56d84d594da0Edda8DAAD8dccCBbFf0F19";
+  "0x94fceE4f8eB8418DfF7F8CF458F6e5D2be05C477";

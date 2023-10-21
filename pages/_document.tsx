@@ -8,7 +8,7 @@ export default function Document() {
       style={{ scrollBehavior: "smooth" }}
     >
       <Head />
-      <body className="h-full bg-gray-900">
+      <body className="min-h-full bg-gray-900">
         <Main />
         <NextScript />
       </body>

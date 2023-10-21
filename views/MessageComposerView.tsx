@@ -17,7 +17,7 @@ import {
   ContentTypeAttachment,
 } from "@xmtp/content-type-remote-attachment";
 import AttachmentPreviewView from "./AttachmentPreviewView";
-import { MessageContent } from "./MessageCellView";
+import { MessageContent } from "./MessageCellViewOriginal";
 import { shortAddress } from "../util/shortAddress";
 import { ContentTypeReply, Reply } from "@xmtp/content-type-reply";
 import { PaperAirplaneIcon, PaperClipIcon } from "@heroicons/react/24/outline";
