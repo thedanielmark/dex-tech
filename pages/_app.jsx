@@ -46,7 +46,7 @@ export default function App({ Component, pageProps }) {
 
   const { connectors } = getDefaultWallets({
     appName: "DexTech",
-    projectId: "2588db3d04914636093b01d564610991",
+    projectId: "68c961d33487e0adae591fc2bccae7b3",
     chains,
   });
 
