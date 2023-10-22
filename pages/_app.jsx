@@ -35,11 +35,35 @@ const MumbaiEVM = {
   testnet: true,
 };
 
+const SepoliaEVM = {
+  id: 534351,
+  name: "Sepolia",
+  network: "Sepolia Testnet",
+  iconUrl: "https://img.api.cryptorank.io/coins/scroll1662388084493.png",
+  iconBackground: "#fff",
+  nativeCurrency: {
+    name: "ETH",
+    symbol: "ETH",
+    decimals: 18,
+  },
+  rpcUrls: {
+    public: { http: ["https://1rpc.io/scroll/sepolia"] },
+    default: { http: ["https://1rpc.io/scroll/sepolia"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blockscout",
+      url: "https://sepolia-blockscout.scroll.io/",
+    },
+  },
+  testnet: true,
+};
+
 export default function App({ Component, pageProps }) {
   const [ready, setReady] = useState(false);
 
   const { publicClient, chains } = configureChains(
-    [mainnet, MumbaiEVM],
+    [mainnet, SepoliaEVM],
     [publicProvider()]
   );
 

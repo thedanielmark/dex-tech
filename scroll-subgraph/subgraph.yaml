@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: scroll-sepolia
+    source:
+      address: "0x2c8CEc9B25DbFEAC623b42CbAb268A4409Fe73E1"
+      abi: Contract
+      startBlock: 1761979
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenMinted
+        - TraderTokenCreated
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: TokenMinted(indexed address,address)
+          handler: handleTokenMinted
+        - event: TraderTokenCreated(indexed address,address)
+          handler: handleTraderTokenCreated
+      file: ./src/contract.ts

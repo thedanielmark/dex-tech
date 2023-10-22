@@ -198,6 +198,12 @@ export default function TopTraders() {
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-black text-white"
+                      >
+                        Key Holders
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-black text-white"
                       ></th>
                     </tr>
                   </thead>
@@ -254,6 +260,9 @@ export default function TopTraders() {
                         </td>
                         <td className="whitespace-nowrap px-3 py-5 font-bold text-base text-gray-200">
                           ${formatCurrency(trader.keyPrice * 1600)}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-5 font-bold text-base text-gray-200">
+                          {trader.holderCount}
                         </td>
                         <td className="whitespace-nowrap px-3 py-5 font-bold text-base text-gray-200 cursor-pointer text-right">
                           {trader.id == address.toLowerCase() ? (

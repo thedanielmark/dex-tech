@@ -1,0 +1,17 @@
+type TokenMinted @entity(immutable: true) {
+  id: Bytes!
+  trader: Bytes! # address
+  customer: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TraderTokenCreated @entity(immutable: true) {
+  id: Bytes!
+  trader: Bytes! # address
+  tokenAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

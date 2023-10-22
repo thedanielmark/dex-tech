@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: mumbai
+    source:
+      address: "0x94fceE4f8eB8418DfF7F8CF458F6e5D2be05C477"
+      abi: Contract
+      startBlock: 41462762
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenMinted
+        - TraderTokenCreated
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: TokenMinted(indexed address,address)
+          handler: handleTokenMinted
+        - event: TraderTokenCreated(indexed address,address)
+          handler: handleTraderTokenCreated
+      file: ./src/contract.ts
